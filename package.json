@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "bot.js",
-  "dependencies": {},
-  "devDependencies": {
+  "dependencies": {
     "discord.js": "^11.5.1"
+  },
+  "devDependencies": {
   },
   "scripts": {
     "start": "node bot.js",
