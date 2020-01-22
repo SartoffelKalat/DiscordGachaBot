@@ -6,7 +6,7 @@
         "SUPER RARE!\nConducteur",
         ":fire::fire::fire::fire:SSR DROP:fire::fire::fire::fire::fire::fire:\n:fire:You have been promoted to admin!   :fire:\n:fire::fire::fire::fire::fire::fire::fire::fire::fire::fire::fire::fire: :fire:"
     ],
-    "roles": ["HOLZKLASSE", "2.KLASSE", "1.KLASSE", "CONDUCTEUR", "ZUGFÜHRER"],
+    "roles": ["Holzklasse", "2. Klasse", "1. Klasse", "Conducteur", "Zugführer"],
     "channel": "gacha",
     "dailyRolls": 3,
     "resetHour": 19

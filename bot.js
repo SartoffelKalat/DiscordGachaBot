@@ -48,8 +48,8 @@ client.on("message", (message) => {
             toBeAssignedRole = message.guild.roles.find(r => r.name === ALL_ROLES[4])    
         }
         else if(isBetween(rng, 1,400)){
-            message.channel.send(MESSAGES[4] + ROLL_MESSAGE +  rollCount[""+userid].amount + " of "+ config.dailyRolls)
-            toBeAssignedRole = message.guild.roles.find(r => r.name === ALL_ROLES[4])    
+            message.channel.send(MESSAGES[0] + ROLL_MESSAGE +  rollCount[""+userid].amount + " of "+ config.dailyRolls)
+            toBeAssignedRole = message.guild.roles.find(r => r.name === ALL_ROLES[0])    
         }
         else if(isBetween(rng, 401, 700)){
             message.channel.send(MESSAGES[1] + ROLL_MESSAGE +  rollCount[""+userid].amount + " of "+ config.dailyRolls)
@@ -66,7 +66,7 @@ client.on("message", (message) => {
         if (toBeDeletedRole&&!(toBeAssignedRole.id === toBeDeletedRole.id)){ 
             message.member.removeRole(toBeDeletedRole).catch();
         }
-        message.member.addRole(toBeAssignedRole).catch();
+        message.member.addRole(toBeAssignedRole);
     }
     else{
         message.channel.send("Daily Roll limit has been surpassed please try again later.")
