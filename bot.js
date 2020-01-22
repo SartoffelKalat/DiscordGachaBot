@@ -48,8 +48,8 @@ client.on("message", (message) => {
             toBeAssignedRole = message.guild.roles.find(r => r.name === ALL_ROLES[4])    
         }
         else if(isBetween(rng, 1,400)){
-            message.channel.send(MESSAGES[0] + ROLL_MESSAGE +  rollCount[""+userid].amount + " of "+ config.dailyRolls)
-            toBeAssignedRole = message.guild.roles.find(r => r.name === ALL_ROLES[0])    
+            message.channel.send(MESSAGES[4] + ROLL_MESSAGE +  rollCount[""+userid].amount + " of "+ config.dailyRolls)
+            toBeAssignedRole = message.guild.roles.find(r => r.name === ALL_ROLES[4])    
         }
         else if(isBetween(rng, 401, 700)){
             message.channel.send(MESSAGES[1] + ROLL_MESSAGE +  rollCount[""+userid].amount + " of "+ config.dailyRolls)
