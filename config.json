@@ -1,0 +1,13 @@
+{
+    "messages": [
+        "COMMON...\nHolzklasse",
+        "UNCOMMON...\n2. Klasse",
+        "RARE!\n1. Klasse",
+        "SUPER RARE!\nConducteur",
+        ":fire::fire::fire::fire:SSR DROP:fire::fire::fire::fire::fire::fire:\n:fire:You have been promoted to admin!   :fire:\n:fire::fire::fire::fire::fire::fire::fire::fire::fire::fire::fire::fire: :fire:"
+    ],
+    "roles": ["C", "UC", "R", "SR", "SSR"],
+    "channel": "gacha",
+    "dailyRolls": 3,
+    "resetHour": 19
+}
