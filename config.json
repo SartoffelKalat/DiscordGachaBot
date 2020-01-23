@@ -9,5 +9,5 @@
     "roles": ["Holzklasse", "2. Klasse", "1. Klasse", "Conducteur", "Zugführer"],
     "channel": "billetkontrolle",
     "dailyRolls": 3,
-    "resetHour": 19
+    "resetHour": 23
 }
