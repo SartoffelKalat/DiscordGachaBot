@@ -1,29 +1,13 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
+var dbHandler = require("./db-handling.js");
+const db = new dbHandler()
 const config = require("./config.json");
 
 const ALL_ROLES = config.roles;
 const MESSAGES = config.messages;
 const ROLL_MESSAGE = "\nRolls done Today: "
-var rollCount = {};
 var resetDate = new Date();
-
-function isBetween(n, from, to){
-    return n>=from && n<=to;
-}
-function addRoll(userid){
-        let currentRolls =  rollCount[""+userid]
-        if(currentRolls&&currentRolls.amount < config.dailyRolls){
-            currentRolls.amount++;
-        }
-        else if(!currentRolls){
-            rollCount[""+userid] = {amount: 1}
-        }
-        else{
-            return false
-        }
-    return true;
-}
 
 client.on("ready", () => {
   resetDate = new Date();
@@ -34,34 +18,30 @@ client.on("ready", () => {
 client.on("message", (message) => {
   if (message.channel.name === config.channel && message.content.startsWith(".roll")) {
     //Reset the roll table if daily reset
+
     if(new Date()>resetDate){
-        rollCount = {};
+        db.resetRolls();
         resetDate = resetDate.setDate(resetDate.getDate()+1);
     }
     let toBeAssignedRole;
-    let userid = message.member.id
-    if(addRoll(userid)){
+    let userId = message.member.id
+    if(addRoll(userId)){
         rng = Math.round(Math.random()*1000)
         let toBeDeletedRole = message.member.roles.find(r => ALL_ROLES.includes(r.name));    
         if(rng===0){
-            message.channel.send(MESSAGES[4] + ROLL_MESSAGE +  rollCount[""+userid].amount + " of "+ config.dailyRolls);
-            toBeAssignedRole = message.guild.roles.find(r => r.name === ALL_ROLES[4])    
+            toBeAssignedRole = printAndAssignRole(message, 4, userId)
         }
         else if(isBetween(rng, 1,400)){
-            message.channel.send(MESSAGES[0] + ROLL_MESSAGE +  rollCount[""+userid].amount + " of "+ config.dailyRolls)
-            toBeAssignedRole = message.guild.roles.find(r => r.name === ALL_ROLES[0])    
+            toBeAssignedRole = printAndAssignRole(message, 0, userId)
         }
         else if(isBetween(rng, 401, 700)){
-            message.channel.send(MESSAGES[1] + ROLL_MESSAGE +  rollCount[""+userid].amount + " of "+ config.dailyRolls)
-            toBeAssignedRole = message.guild.roles.find(r => r.name === ALL_ROLES[1])    
+            toBeAssignedRole = printAndAssignRole(message, 1, userId)
         }
         else if(isBetween(rng, 701, 900)){
-            message.channel.send(MESSAGES[2] + ROLL_MESSAGE +  rollCount[""+userid].amount + " of "+ config.dailyRolls)
-            toBeAssignedRole = message.guild.roles.find(r => r.name === ALL_ROLES[2])    
+            toBeAssignedRole = printAndAssignRole(message, 2, userId)
         }
         else if(isBetween(rng, 901, 1000)){
-            message.channel.send(MESSAGES[3] + ROLL_MESSAGE +  rollCount[""+userid].amount + " of "+ config.dailyRolls)
-            toBeAssignedRole = message.guild.roles.find(r => r.name === ALL_ROLES[3])    
+            toBeAssignedRole = printAndAssignRole(message, 3, userId)
         }
         if (toBeDeletedRole&&!(toBeAssignedRole.id === toBeDeletedRole.id)){ 
             message.member.removeRole(toBeDeletedRole).catch();
@@ -69,8 +49,29 @@ client.on("message", (message) => {
         message.member.addRole(toBeAssignedRole);
     }
     else{
-        message.channel.send("Daily Roll limit has been surpassed please try again later.")
+        message.channel.send("Your daily roll limit has been reached please try again later.")
     }
 }
 });
 client.login("NjY5NTEzODUxNTU2OTg2ODkw.XihBJw.52KGPyLsW4w1ahql3urivrDe5HA")
+
+function isBetween(n, from, to){
+    return n>=from && n<=to;
+}
+function addRoll(userId){
+        let roll = db.getRoll(userId);
+        if(roll&&roll.count < config.dailyRolls){
+            db.incrementRoll(userId);
+        }
+        else if(!roll){
+            db.setRoll(userId, 1);
+        }
+        else{
+            return false
+        }
+    return true;
+}
+function printAndAssignRole(message, roleIndex, userId){
+    message.channel.send(MESSAGES[roleIndex] + ROLL_MESSAGE +  db.getRoll(userId).count + " of "+ config.dailyRolls);
+    return message.guild.roles.find(r => r.name === ALL_ROLES[roleIndex])
+}
