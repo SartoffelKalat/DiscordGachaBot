@@ -25,9 +25,7 @@ module.exports = class DbHandler {
             .write();
     }
     resetRolls = function(){
-        db.get("rolls")
-            .find({})
-            .update('count', n => 0)
+        db.set("rolls", [])
             .write();
     }
 }

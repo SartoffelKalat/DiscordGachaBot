@@ -5,7 +5,8 @@
   "main": "bot.js",
   "dependencies": {
     "discord.js": "^11.5.1",
-    "lowdb": "^1.0.0"
+    "lowdb": "^1.0.0",
+    "moment": "^2.24.0"
   },
   "devDependencies": {},
   "scripts": {

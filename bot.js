@@ -3,6 +3,7 @@ const client = new Discord.Client();
 var dbHandler = require("./db-handling.js");
 const db = new dbHandler()
 const config = require("./config.json");
+const moment = require('moment');
 
 const ALL_ROLES = config.roles;
 const MESSAGES = config.messages;
@@ -10,20 +11,19 @@ const ROLL_MESSAGE = "\nRolls done Today: "
 var resetDate;
 
 client.on("ready", () => {
-  resetDate = new Date();
-  resetDate.setHours(config.resetHour, 00, 00, 00);
+  resetDate = moment();
+  resetDate.hour(config.resetHour).minute(27).second(0).millisecond(0);
   console.log("I am ready!");
 });
  
 client.on("message", (message) => {
-    if(new Date()>resetDate){
+    if(moment().isAfter(resetDate)){
         db.resetRolls();   
-        resetDate = resetDate.setDate(resetDate.getDate()+1);
+        resetDate.add(1, 'd');
     }
 
     let userId = message.member.id
     if (message.channel.name === config.channel && message.content.startsWith(".roll")) {
-        //Reset the roll table if daily reset
         let toBeAssignedRole;
         
         if(addRoll(userId)){
@@ -59,7 +59,7 @@ client.on("message", (message) => {
 
     }
 });
-client.login("NjY5NTEzODUxNTU2OTg2ODkw.XihBJw.52KGPyLsW4w1ahql3urivrDe5HA")
+client.login("NjY5NTEzODUxNTU2OTg2ODkw.Xi10QQ.h9C2D_wZ-t0ywrjFh7VjSzM3FDw")
 
 function isBetween(n, from, to){
     return n>=from && n<=to;

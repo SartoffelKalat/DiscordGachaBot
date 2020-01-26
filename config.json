@@ -9,5 +9,5 @@
     "roles": ["Holzklasse", "2. Klasse", "1. Klasse", "Conducteur", "Zugführer"],
     "channel": "gacha",
     "dailyRolls": 3,
-    "resetHour": 11
+    "resetHour": 20
 }
