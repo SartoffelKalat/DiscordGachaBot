@@ -7,7 +7,7 @@ const config = require("./config.json");
 const ALL_ROLES = config.roles;
 const MESSAGES = config.messages;
 const ROLL_MESSAGE = "\nRolls done Today: "
-var resetDate = new Date();
+var resetDate;
 
 client.on("ready", () => {
   resetDate = new Date();
@@ -16,42 +16,48 @@ client.on("ready", () => {
 });
  
 client.on("message", (message) => {
-  if (message.channel.name === config.channel && message.content.startsWith(".roll")) {
-    //Reset the roll table if daily reset
-
     if(new Date()>resetDate){
-        db.resetRolls();
+        db.resetRolls();   
         resetDate = resetDate.setDate(resetDate.getDate()+1);
     }
-    let toBeAssignedRole;
+
     let userId = message.member.id
-    if(addRoll(userId)){
-        rng = Math.round(Math.random()*1000)
-        let toBeDeletedRole = message.member.roles.find(r => ALL_ROLES.includes(r.name));    
-        if(rng===0){
-            toBeAssignedRole = printAndAssignRole(message, 4, userId)
+    if (message.channel.name === config.channel && message.content.startsWith(".roll")) {
+        //Reset the roll table if daily reset
+        let toBeAssignedRole;
+        
+        if(addRoll(userId)){
+            rng = Math.round(Math.random()*1000)
+            let toBeDeletedRole = message.member.roles.find(r => ALL_ROLES.includes(r.name));    
+            if(rng===0){
+                toBeAssignedRole = printAndAssignRole(message, 4, userId)
+            }
+            else if(isBetween(rng, 1,400)){
+                toBeAssignedRole = printAndAssignRole(message, 0, userId)
+            }
+            else if(isBetween(rng, 401, 700)){
+                toBeAssignedRole = printAndAssignRole(message, 1, userId)
+            }
+            else if(isBetween(rng, 701, 900)){
+                toBeAssignedRole = printAndAssignRole(message, 2, userId)
+            }
+            else if(isBetween(rng, 901, 1000)){
+                toBeAssignedRole = printAndAssignRole(message, 3, userId)
+            }
+            if (toBeDeletedRole&&!(toBeAssignedRole.id === toBeDeletedRole.id)){ 
+                message.member.removeRole(toBeDeletedRole).catch();
+            }
+            message.member.addRole(toBeAssignedRole);
         }
-        else if(isBetween(rng, 1,400)){
-            toBeAssignedRole = printAndAssignRole(message, 0, userId)
+        else{
+            message.channel.send("Your daily roll limit has been reached please try again later.")
         }
-        else if(isBetween(rng, 401, 700)){
-            toBeAssignedRole = printAndAssignRole(message, 1, userId)
-        }
-        else if(isBetween(rng, 701, 900)){
-            toBeAssignedRole = printAndAssignRole(message, 2, userId)
-        }
-        else if(isBetween(rng, 901, 1000)){
-            toBeAssignedRole = printAndAssignRole(message, 3, userId)
-        }
-        if (toBeDeletedRole&&!(toBeAssignedRole.id === toBeDeletedRole.id)){ 
-            message.member.removeRole(toBeDeletedRole).catch();
-        }
-        message.member.addRole(toBeAssignedRole);
     }
-    else{
-        message.channel.send("Your daily roll limit has been reached please try again later.")
+    else if(message.channel.name === config.channel && message.content.startsWith(".reset") && userId == "169153031097679872") {
+        db.resetRolls();   
+        message.channel.send("Daily rolls have been reset.")
+
     }
-}
 });
 client.login("NjY5NTEzODUxNTU2OTg2ODkw.XihBJw.52KGPyLsW4w1ahql3urivrDe5HA")
 
