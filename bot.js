@@ -59,7 +59,7 @@ client.on("message", (message) => {
 
     }
 });
-client.login("**insert_secret_here**")
+client.login("NjY5NTEzODUxNTU2OTg2ODkw.Xig7XQ._2Mu1Ynsd6JK6oBJHrqqDKa9if4")
 
 function isBetween(n, from, to){
     return n>=from && n<=to;
