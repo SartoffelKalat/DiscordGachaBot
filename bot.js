@@ -23,12 +23,12 @@ client.on("message", (message) => {
     }
 
     let userId = message.member.id
-    if (message.channel.name === config.channel && message.content.startsWith(".roll")) {
+    if (message.channel.id === config.channel && message.content.startsWith(".roll")) {
         let toBeAssignedRole;
         
         if(addRoll(userId)){
             rng = Math.round(Math.random()*1000)
-            let toBeDeletedRole = message.member.roles.find(r => ALL_ROLES.includes(r.name));    
+            let toBeDeletedRole = message.member.roles.cache.find(r => ALL_ROLES.includes(r.id));    
             if(rng===0){
                 toBeAssignedRole = printAndAssignRole(message, 4, userId)
             }
@@ -45,9 +45,9 @@ client.on("message", (message) => {
                 toBeAssignedRole = printAndAssignRole(message, 3, userId)
             }
             if (toBeDeletedRole&&!(toBeAssignedRole.id === toBeDeletedRole.id)){ 
-                message.member.removeRole(toBeDeletedRole).catch();
+                message.member.roles.remove(toBeDeletedRole).catch();
             }
-            message.member.addRole(toBeAssignedRole);
+            message.member.roles.add(toBeAssignedRole);
         }
         else{
             message.channel.send("Your daily roll limit has been reached please try again later.")
@@ -59,7 +59,7 @@ client.on("message", (message) => {
 
     }
 });
-client.login("NjY5NTEzODUxNTU2OTg2ODkw.Xi10QQ.h9C2D_wZ-t0ywrjFh7VjSzM3FDw")
+client.login("**insert_secret_here**")
 
 function isBetween(n, from, to){
     return n>=from && n<=to;
@@ -79,5 +79,5 @@ function addRoll(userId){
 }
 function printAndAssignRole(message, roleIndex, userId){
     message.channel.send(MESSAGES[roleIndex] + ROLL_MESSAGE +  db.getRoll(userId).count + " of "+ config.dailyRolls);
-    return message.guild.roles.find(r => r.name === ALL_ROLES[roleIndex])
+    return message.guild.roles.cache.find(r => r.id === ALL_ROLES[roleIndex])
 }
