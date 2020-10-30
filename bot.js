@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
+var gen = require('random-seed'); // create a generator
 var dbHandler = require("./db-handling.js");
 const db = new dbHandler()
 const config = require("./config.json");
@@ -27,7 +28,9 @@ client.on("message", (message) => {
         let toBeAssignedRole;
         
         if(addRoll(userId)){
-            rng = Math.round(Math.random()*1000)
+            seed = message.content.replace(".roll", "")
+            var rand = gen.create(seed);
+            rng = Math.round(rand.random()*1000)
             let toBeDeletedRole = message.member.roles.cache.find(r => ALL_ROLES.includes(r.id));    
             if(rng===0){
                 toBeAssignedRole = printAndAssignRole(message, 4, userId)
