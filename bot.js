@@ -30,12 +30,12 @@ client.on("message", (message) => {
         if(addRoll(userId)){
             seed = message.content.replace(".roll", "")
             var rand = gen.create(seed);
-            rng = Math.round(rand.random()*1000)
+            rng = Math.floor(rand.random()*1000)
             let toBeDeletedRole = message.member.roles.cache.find(r => ALL_ROLES.includes(r.id));    
-            if(rng===0){
+            if(rng===0||rng===1){
                 toBeAssignedRole = printAndAssignRole(message, 4, userId)
             }
-            else if(isBetween(rng, 1,400)){
+            else if(isBetween(rng, 2,400)){
                 toBeAssignedRole = printAndAssignRole(message, 0, userId)
             }
             else if(isBetween(rng, 401, 700)){
