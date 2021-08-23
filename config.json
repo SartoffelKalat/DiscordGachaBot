@@ -1,14 +1,38 @@
 {
-    "messages": [
-        "COMMON...\nHolzklasse",
-        "UNCOMMON...\n2. Klasse",
-        "RARE!\n1. Klasse",
-        "SUPER RARE!\nConducteur",
-        ":fire::fire::fire::fire:SSR DROP:fire::fire::fire::fire::fire::fire:\n:fire:You have been promoted to admin!   :fire:\n:fire::fire::fire::fire::fire::fire::fire::fire::fire::fire::fire::fire: :fire:"
-    ],
-    "roles": ["653643405968277504", "651553277338714112", "651553231704686603", "657925233159962633", "656514182493110274"],
-    "adminRole": "656514182493110274",
-    "channel": "669581498936197154",
-    "dailyRolls": 3,
-    "resetHour": 20
+  "messages": [
+    "COMMON...",
+    "UNCOMMON...",
+    "RARE!",
+    "SUPER RARE!",
+    "@everyone\n:fire::fire::fire::fire:SSR DROP:fire::fire::fire::fire::fire::fire:\n:fire:You have been promoted to admin!   :fire:\n:fire::fire::fire::fire::fire::fire::fire::fire::fire::fire::fire::fire: :fire:"
+  ],
+  "rolesDepl": [
+    "877984190463877211",
+    "877984074365542491",
+    "877984037090779206",
+    "877984003649585152",
+    "879104899881762906"
+  ],
+  "rolesDev": [
+    "669529520990322699",
+    "669529572630331394",
+    "669529594134528020",
+    "669529612082216980",
+    "669576703881904171"
+  ],
+  "dropRates": [
+    398,
+    300,
+    200,
+    100,
+    2
+  ],
+  "adminRole": "879104899881762906",
+  "channels": [
+    "669544745026060308",
+    "669581498936197154",
+    "877983473112072204"
+  ],
+  "dailyRolls": 6,
+  "resetHour": 20
 }
